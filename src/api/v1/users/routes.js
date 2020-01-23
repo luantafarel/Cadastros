@@ -1,7 +1,7 @@
 const express = require('express')
 let router = express.Router()
 
-const usersController = require('../../../controllers/api/v1/users/controller')
+const usersController = require('./controller')
 
 /**
  * @swagger

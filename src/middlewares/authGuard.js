@@ -2,7 +2,7 @@ const express = require('express')
 const jwt = require('jsonwebtoken')
 const config = require('../config/env/config')
 
-const authClientToken = async (req, res, next) => {
+const verifyToken = async (req, res, next) => {
   let token = req.headers['authorization']
 
   if (!token) {
@@ -23,5 +23,5 @@ const authClientToken = async (req, res, next) => {
 }
 
 module.exports = {
-  authClientToken
+  verifyToken
 }
