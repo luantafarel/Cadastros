@@ -1,4 +1,4 @@
-const User = require('../../../models/user.model')
+const User = require('../../../models/user')
 
 const getUserById = async (req, res, next) => {
   let userId = req.params.id

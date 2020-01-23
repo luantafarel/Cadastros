@@ -1,4 +1,4 @@
-const User = require('../../../models/user.model')
+const User = require('../../../models/user')
 
 const getUsers = async (req, res, next) => {
   try {
@@ -20,12 +20,7 @@ const getUsers = async (req, res, next) => {
       })
     )
   } catch (error) {
-    return next(
-      res.status(500).json({
-        code: 'SERVER_ERROR',
-        description: 'something went wrong, Please try again'
-      })
-    )
+    return res.status(500).send(Boom.badImplementation('Unexpected problem happened'))
   }
 }
 
@@ -48,12 +43,7 @@ const getUserById = async (req, res, next) => {
       })
     )
   } catch (error) {
-    return next(
-      res.status(500).json({
-        code: 'SERVER_ERROR',
-        description: 'something went wrong, Please try again'
-      })
-    )
+    return res.status(500).send(Boom.badImplementation('Unexpected problem happened'))
   }
 }
 
@@ -113,12 +103,7 @@ const createUser = async (req, res, next) => {
       throw new Error('something went worng')
     }
   } catch (error) {
-    return next(
-      res.status(500).json({
-        code: 'SERVER_ERROR',
-        description: 'something went wrong, Please try again'
-      })
-    )
+    return res.status(500).send(Boom.badImplementation('Unexpected problem happened'))
   }
 }
 
@@ -179,12 +164,7 @@ const updateUser = async (req, res, next) => {
       throw new Error('something went worng')
     }
   } catch (error) {
-    return next(
-      res.status(500).json({
-        code: 'SERVER_ERROR',
-        description: 'something went wrong, Please try again'
-      })
-    )
+    return res.status(500).send(Boom.badImplementation('Unexpected problem happened'))
   }
 }
 
@@ -206,12 +186,7 @@ const deleteUser = async (req, res, next) => {
       })
     )
   } catch (error) {
-    return next(
-      res.status(500).json({
-        code: 'SERVER_ERROR',
-        description: 'something went wrong, Please try again'
-      })
-    )
+    return res.status(500).send(Boom.badImplementation('Unexpected problem happened'))
   }
 }
 
