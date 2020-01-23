@@ -1,92 +1,115 @@
 const express = require('express')
 let router = express.Router()
 
-const usersController = require('../users/controller')
+const authController = require('./controller')
+const validation = require('../../../middlewares/validation')
 
 /**
  * @swagger
  *
  * definitions:
- *   UpdateUser:
+ *   LoginUser:
  *     type: object
  *     required:
  *       email
- *       name
+ *       password
  *     properties:
  *       email:
  *         type: string
  *         format: email
+ *       password:
+ *         type: string
+ *         minLength: 8
+ *         example: testing123
+ *
+ *   RegisterUser:
+ *     allOf:
+ *     -  $ref: "#/definitions/LoginUser"
+ *     type: object
+ *     required:
+ *       name
+ *     properties:
  *       name:
  *         type: string
  *         minLength: 3
- *
- *   User:
- *     allOf:
- *     -  $ref: "#/definitions/UpdateUser"
- *     type: object
- *     required:
- *       createdAt
- *       updatedAt
- *     properties:
- *       createdAt:
- *         type: string
- *         format: date-time
- *       updatedAt:
- *         type: string
- *         format: date-time
  */
 
 /**
  *  @swagger
- *  /users/{id}:
- *    get:
+ *  /auth/register:
+ *    post:
  *      summary:
- *      - Get user data by id
+ *      - Register a new user
  *      produces:
  *      - application/json
  *      parameters:
- *      - name: "id"
- *        in: "path"
- *        description: "User id"
+ *      - in: "body"
+ *        name: "body"
+ *        description: "User to be registered"
  *        required: true
- *        type: "string"
+ *        schema:
+ *          $ref: "#/definitions/RegisterUser"
  *      tags:
- *      - users
+ *      - auth
  *      responses:
- *        200:
- *          description: "User fetched successfully"
+ *        201:
+ *          description: User registered successfully
  *          schema:
- *            $ref: "#/definitions/User"
- *        401:
- *          description: "User id param is different from the user id inside JWT payload"
- *        404:
- *          description: "User not found"
+ *            type: "object"
+ *            properties:
+ *              id:
+ *                type: string
+ *                format: ObjectId
+ *        409:
+ *          description: E-mail already exists
+ *        422:
+ *          description: Some required field is missing
  */
-router.get('/:id', usersController.checkUser, usersController.getUserById)
-router.put('/:id', usersController.checkUser, usersController.updateUser)
+router.post(
+  '/register',
+  validation.validateRegistrationBody(),
+  authController.register
+)
 
 /**
  *  @swagger
- *  /users/{id}:
- *    delete:
+ *  /auth/login:
+ *    post:
  *      summary:
- *      - Delete the user with the given id
+ *      - Logs the user in and get an authorization token
+ *      produces:
+ *      - application/json
  *      parameters:
- *      - name: "id"
- *        in: "path"
- *        description: "User id"
+ *      - in: "body"
+ *        name: "body"
+ *        description: "User to be logged"
  *        required: true
- *        type: "string"
+ *        schema:
+ *          $ref: "#/definitions/LoginUser"
  *      tags:
- *      - users
+ *      - auth
  *      responses:
- *        204:
- *          description: "User deleted successfully"
+ *        200:
+ *          description: User logged in successfully
+ *          schema:
+ *            type: "object"
+ *            properties:
+ *              msg:
+ *                type: string
+ *              email:
+ *                type: string
+ *                format: email
+ *              token:
+ *                type: string
+ *                format: jwt
+ *              id:
+ *                type: string
+ *                format: ObjectId
  *        401:
- *          description: "User id param is different from the user id inside JWT payload"
- *        404:
- *          description: "User not found"
+ *          description: E-mail/password is wrong
+ *        422:
+ *          description: Some required field is missing
  */
-router.delete('/:id', usersController.checkUser, usersController.deleteUser)
+router.post('/login', validation.validateLoginBody(), authController.login)
 
 module.exports = router
