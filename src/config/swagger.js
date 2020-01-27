@@ -9,5 +9,5 @@ module.exports = {
       description: 'Authorization endpoints'
     },
     basePath: '/api/v1',
-    apis: ['src/routes/api/v1/*.js']
+    apis: ['src/api/v1/auth/routes.js','src/api/v1/users/routes.js','src/api/v1/generic/routes.js']
   }

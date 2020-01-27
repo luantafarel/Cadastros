@@ -11,14 +11,14 @@ const verifyToken = async (req, res, next) => {
 
   // Check if token is valid
   jwt.verify(token, process.env.PRIVATE_KEY, async (err, decoded) => {
+    if (err) {
+      res.status(401)
+      return next({ errors: [{ msg: err.message }], realError: err })
+    }
     let user = await userModel.findById(decoded.id)
     if (!user) {
       res.status(401)
       return next({ errors: [{ msg: 'user deleted' }], realError: err })
-    }
-    else if (err) {
-      res.status(401)
-      return next({ errors: [{ msg: 'invalid token' }], realError: err })
     }
     req.jwtId = decoded.id
     next()

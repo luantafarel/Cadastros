@@ -21,7 +21,16 @@ const validation = require('../../../middlewares/validation')
  *         type: string
  *         minLength: 8
  *         example: testing123
- *
+ *   Telefones:
+ *     type: object
+ *     properties:
+ *          ddd:
+ *              type: string
+ *              lenght: 3
+ *          numero:
+ *              type: string
+ *              maxLenght: 9
+ *              minLenght: 8
  *   RegisterUser:
  *     allOf:
  *     -  $ref: "#/definitions/LoginUser"
@@ -32,6 +41,10 @@ const validation = require('../../../middlewares/validation')
  *       name:
  *         type: string
  *         minLength: 3
+ *       telefone:
+ *         type: array
+ *         items:
+ *          $ref: "#/definitions/Telefones" 
  */
 
 /**
@@ -110,6 +123,6 @@ router.post(
  *        422:
  *          description: Some required field is missing
  */
-router.post('/login', validation.validateLoginBody(), authController.login)
+router.post('/login',validation.validateLoginBody(),authController.login)
 
 module.exports = router
