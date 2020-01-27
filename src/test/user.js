@@ -1,7 +1,7 @@
 const mocha = require('mocha')
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const server = require('../src/server')
+const server = require('../server/server.js')
 const should = chai.should()
 
 chai.use(chaiHttp)
@@ -67,7 +67,7 @@ describe('Test user API', function() {
   it('Get new user', function(done) {
     chai
       .request(server)
-      .get('/api/users/' + id)
+      .get('/api/v1/users/' + id)
       .end(function(err, res) {
         res.should.have.status(200)
         res.body.should.be.a('object')
@@ -80,7 +80,7 @@ describe('Test user API', function() {
   it('Get new user orders', function(done) {
     chai
       .request(server)
-      .get('/api/users/' + id + '/orders')
+      .get('/api/v1/users/' + id + '/orders')
       .end(function(err, res) {
         res.should.have.status(200)
         res.body.should.be.a('array')
@@ -103,7 +103,7 @@ describe('Test user API', function() {
   it('Update user', function(done) {
     chai
       .request(server)
-      .put('/api/users/' + id)
+      .put('/api/v1/users/' + id)
       .send(updateUser)
       .end(function(err, res) {
         res.should.have.status(200)
@@ -117,7 +117,7 @@ describe('Test user API', function() {
   it('Block email deletion', function(done) {
     chai
       .request(server)
-      .put('/api/users/' + id)
+      .put('/api/v1/users/' + id)
       .send(badUpdateUser)
       .end(function(err, res) {
         res.should.have.status(405)
@@ -128,7 +128,7 @@ describe('Test user API', function() {
   it('Delete created user', function(done) {
     chai
       .request(server)
-      .delete('/api/users/' + id)
+      .delete('/api/v1/users/' + id)
       .end(function(err, res) {
         res.should.have.status(200)
         done()
