@@ -11,7 +11,7 @@ const connection = {
 exports.connect = function() {
   return new Promise((resolve,reject) => {
     mongoose
-      .connect(connection.mongoAtlas,{
+      .createConnection(connection.mongoAtlas,{
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true
