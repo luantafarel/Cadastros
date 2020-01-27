@@ -1,12 +1,12 @@
 const User = require('../../../models/user')
 
 const getUserById = async (req, res, next) => {
-  let userId = req.params.id
+  let userId = req.params.id 
 
   try {
     // Get user from database
     let user = await User.findById(userId).select(
-      'name email createdAt updatedAt'
+      'name email createdAt updatedAt telefone lastLogin'
     )
     if (user) {
       return res.status(200).json({

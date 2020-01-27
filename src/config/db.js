@@ -3,13 +3,12 @@ const logger = require('./winston').logger
 
 const collection = 'test'
 const user = 'admin'
-const password = '2GFCikqDsTe9eoHA'
+const password = 'test'
 
 const connection = {
-  mongoAtlas: `mongodb+srv://${user}:${password}@cluster0-cygcu.mongodb.net/${collection}?w=majority`,
+  mongoAtlas: `mongodb+srv://${user}:${password}@cluster0-e7yyt.mongodb.net/${collection}?retryWrites=true&w=majority`,
   mongoLocal: `mongodb://localhost:27017/${collection}`
 }
-
 exports.connect = function() {
   return new Promise((resolve, reject) => {
     mongoose

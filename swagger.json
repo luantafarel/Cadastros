@@ -19,15 +19,28 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": [{
-                    "in": "body",
-                    "name": "body",
-                    "description": "User to be registered",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/RegisterUser"
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "email": "string",
+                        "telefone": {
+                            "ddd": {
+                                "type": "string",
+                                "maxLenght": 2
+                            },
+                            "numero": {
+                                "type": "string",
+                                "maxLenght": 9
+                            }
+                        },
+                        "description": "User to be registered",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/RegisterUser"
+                        }
                     }
-                }],
+                ],
                 "tags": [
                     "auth"
                 ],
@@ -61,15 +74,17 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": [{
-                    "in": "body",
-                    "name": "body",
-                    "description": "User to be logged",
-                    "required": true,
-                    "schema": {
-                        "$ref": "#/definitions/LoginUser"
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User to be logged",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/LoginUser"
+                        }
                     }
-                }],
+                ],
                 "tags": [
                     "auth"
                 ],
@@ -114,13 +129,15 @@
                 "produces": [
                     "application/json"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "path",
-                    "description": "User id",
-                    "required": true,
-                    "type": "string"
-                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "tags": [
                     "users"
                 ],
@@ -143,13 +160,15 @@
                 "summary": [
                     "Delete the user with the given id"
                 ],
-                "parameters": [{
-                    "name": "id",
-                    "in": "path",
-                    "description": "User id",
-                    "required": true,
-                    "type": "string"
-                }],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "User id",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
                 "tags": [
                     "users"
                 ],
@@ -184,9 +203,11 @@
             }
         },
         "RegisterUser": {
-            "allOf": [{
-                "$ref": "#/definitions/LoginUser"
-            }],
+            "allOf": [
+                {
+                    "$ref": "#/definitions/LoginUser"
+                }
+            ],
             "type": "object",
             "required": "name",
             "properties": {
@@ -211,9 +232,11 @@
             }
         },
         "User": {
-            "allOf": [{
-                "$ref": "#/definitions/UpdateUser"
-            }],
+            "allOf": [
+                {
+                    "$ref": "#/definitions/UpdateUser"
+                }
+            ],
             "type": "object",
             "required": "createdAt updatedAt",
             "properties": {

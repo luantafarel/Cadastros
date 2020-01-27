@@ -14,9 +14,22 @@ let User = new Schema(
       unique: true,
       lowercase: true
     },
+    telefone: [{
+      ddd: {
+        type: String,
+        maxLenght: 2
+      },
+      numero: {
+        type: String,
+        maxLenght: 9
+      }
+    }],
     password: {
       type: String,
       required: [true, 'password is required']
+    },
+    lastLogin: {
+      type: Date
     }
   },
   { timestamps: true }

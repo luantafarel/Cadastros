@@ -9,15 +9,15 @@ const usersController = require('./controller')
  * definitions:
  *   UpdateUser:
  *     type: object
- *     required:
- *       email
- *       name
  *     properties:
  *       email:
  *         type: string
  *         format: email
  *       name:
  *         type: string
+ *         minLength: 3
+ *       telephone:
+ *         type: array
  *         minLength: 3
  *
  *   User:

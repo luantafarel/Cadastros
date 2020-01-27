@@ -1,6 +1,5 @@
-const express = require('express')
 const jwt = require('jsonwebtoken')
-const config = require('../config/env/config')
+const userModel = require('../models/user')
 
 const verifyToken = async (req, res, next) => {
   let token = req.headers['authorization']
@@ -11,12 +10,16 @@ const verifyToken = async (req, res, next) => {
   }
 
   // Check if token is valid
-  jwt.verify(token, process.env.PRIVATE_KEY, (err, decoded) => {
-    if (err) {
+  jwt.verify(token, process.env.PRIVATE_KEY, async (err, decoded) => {
+    let user = await userModel.findById(decoded.id)
+    if (!user) {
+      res.status(401)
+      return next({ errors: [{ msg: 'user deleted' }], realError: err })
+    }
+    else if (err) {
       res.status(401)
       return next({ errors: [{ msg: 'invalid token' }], realError: err })
     }
-
     req.jwtId = decoded.id
     next()
   })
