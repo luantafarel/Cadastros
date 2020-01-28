@@ -14,6 +14,7 @@ let app = express()
 
 // Set server variables
 app.set('env', config.env)
+app.set('port', config.port)
 app.set('hostname', config.hostname)
 
 // Middlewares
