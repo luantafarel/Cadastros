@@ -14,9 +14,9 @@ let app = express()
 if (process.env.NODE_ENV !== 'production') {
   // Set server variables
   app.set('env', config.env)
-  app.set('port', config.port)
   app.set('hostname', config.hostname)
 }
+app.set('port', process.env.PORT || 5000)
 // Middlewares
 app.use(cors())
 app.use(helmet())
