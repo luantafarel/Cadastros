@@ -1,6 +1,6 @@
 let localConfig = {
     hostname: 'localhost',
-    port: 3000
+    port: 80
   }
   
   module.exports = localConfig
