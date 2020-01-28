@@ -11,12 +11,12 @@ const config = require('../config/env/config')
 const errorHandler = require('../middlewares/errorHandler')
 
 let app = express()
-
-// Set server variables
-app.set('env', config.env)
-app.set('port', config.port)
-if (!config.hostname) app.set('hostname', config.hostname)
-
+if (process.env.NODE_ENV !== 'production') {
+  // Set server variables
+  app.set('env', config.env)
+  app.set('port', config.port)
+  app.set('hostname', config.hostname)
+}
 // Middlewares
 app.use(cors())
 app.use(helmet())
