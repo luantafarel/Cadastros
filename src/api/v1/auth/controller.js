@@ -68,8 +68,8 @@ const login = async (req,res,next) => {
         let passwordValid = await bcrypt.compare(password,userExists.password)
 
         if(!passwordValid) res.status(401).send(Boom.badData('Email/password is wrong'))
-        // Generate the authorization token, valid for 7 days
-        let token = jwt.sign({ id: userExists._id },process.env.PRIVATE_KEY,{expiresIn: '1m'})
+        // Generate the authorization token, valid for 30 minutes
+        let token = jwt.sign({ id: userExists._id },process.env.PRIVATE_KEY,{expiresIn: '30m'})
         await userModel.findOneAndUpdate(userExists.id,{
             $set: {
                 lastLogin: moment()
