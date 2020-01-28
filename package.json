@@ -8,7 +8,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "nodemon src/server",
-    "start": "node src/server/server.js",
+    "start": "node ./src/server/server.js",
     "build": "echo not implemented yet",
     "api-docs": "swagger-jsdoc -d src/config/swagger.js",
     "test": "mocha --exit"
