@@ -1,6 +1,6 @@
 
 let config = {
-    hostname: 'https://guarded-journey-15500.herokuapp.com/',
+    hostname: null,
     port: 5000
 }
 

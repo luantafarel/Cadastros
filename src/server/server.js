@@ -15,7 +15,7 @@ let app = express()
 // Set server variables
 app.set('env', config.env)
 app.set('port', config.port)
-app.set('hostname', config.hostname)
+if (!config.hostname) app.set('hostname', config.hostname)
 
 // Middlewares
 app.use(cors())
@@ -34,15 +34,15 @@ app.use(routes)
 app.use(errorHandler)
 
 db.connect()
-  .then(function() {
+  .then(function () {
     let hostname = app.get('hostname'),
       port = app.get('port')
 
-    app.listen(port, function() {
+    app.listen(port, function () {
       logger.info(`Express app listening on http://${hostname}:${port}/api`)
     })
   })
-  .catch(function(error) {
+  .catch(function (error) {
     logger.error(error)
   })
 
